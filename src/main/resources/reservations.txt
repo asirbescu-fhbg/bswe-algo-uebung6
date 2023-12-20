@@ -1,0 +1,15 @@
+Lisa;2;Concert
+Max;1;Theatre
+Sarah;4;Sport
+David;3;Concert
+Emma;2;Theatre
+Alex;5;Sport
+Julia;1;Concert
+Tom;3;Theatre
+Emily;2;Sport
+Chris;4;Concert
+Mia;1;Theatre
+Ryan;3;Sport
+Sophie;2;Concert
+Jack;1;Theatre
+Olivia;5;Sport

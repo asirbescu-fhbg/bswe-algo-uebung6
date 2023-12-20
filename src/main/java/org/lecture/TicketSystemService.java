@@ -10,6 +10,10 @@
 
 package org.lecture;
 
+import org.lecture.enums.Event;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class TicketSystemService {
@@ -22,10 +26,15 @@ public class TicketSystemService {
      * @param args The arguments given when executing the application.
      */
     public static void main(String[] args) {
+        System.out.println("Hi");
+
+        TicketSystem ticketSytem = new TicketSystem();
 
 
 
         System.out.println("Good Bye - Closing Application");
     }
+
+
 
 }
