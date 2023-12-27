@@ -12,29 +12,55 @@ package org.lecture;
 
 import org.lecture.enums.Event;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class TicketSystemService {
 
-    private static Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
+
+    public TicketSystemService(){
+
+    }
 
     /**
      * Entry point of the application with a console interface.
-     *
-     * @param args The arguments given when executing the application.
      */
-    public static void main(String[] args) {
+    public void startApplication() throws InterruptedException {
         System.out.println("Hi");
 
-        TicketSystem ticketSytem = new TicketSystem();
+        TicketSystem ticketSystem = new TicketSystem();
+        Thread andi = new Thread(() -> ticketSystem.reserveTicket(Event.Concert, 7));
+        andi.setName("Andi");
+        Thread viktoria = new Thread(() -> ticketSystem.reserveTicket(Event.Concert, 9));
+        viktoria.setName("Viktoria");
 
+        andi.start();
+        viktoria.start();
+        andi.join();
+        viktoria.join();
 
+        andi = new Thread(() -> ticketSystem.cancelTicket(Event.Concert, 2));
+        andi.setName("Andi");
+        viktoria = new Thread(() -> ticketSystem.cancelTicket(Event.Concert, 4));
+        viktoria.setName("Viktoria");
 
-        System.out.println("Good Bye - Closing Application");
+        andi.start();
+        viktoria.start();
+        andi.join();
+        viktoria.join();
+
+        andi = new Thread(() -> ticketSystem.rate(Event.Concert, 2));
+        andi.setName("Andi");
+        viktoria = new Thread(() -> ticketSystem.rate(Event.Concert, 5));
+        viktoria.setName("Viktoria");
+
+        andi.start();
+        viktoria.start();
+        andi.join();
+        viktoria.join();
+
+        ticketSystem.printHistory();
+
+        ticketSystem.printAverageRating(Event.Concert);
     }
-
-
-
 }

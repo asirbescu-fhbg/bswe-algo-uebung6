@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum Event {
-    Concert(30, "20:30"),
-    Theatre(40, "22:00"),
-    Sport(50, "18:00");
+    Concert(30, "20:30 Uhr"),
+    Theatre(40, "22:00 Uhr"),
+    Sport(50, "18:00 Uhr");
 
     private final int maxTickets;
     private final String time;
