@@ -45,10 +45,14 @@ public class TicketSystemService {
 
         User anon = new User("Anon");
         anon.reserve(Event.Theatre, 10);
-        anon.cancel(4);
         anon.rate(2);
 
-        Thread.sleep(3000);
+        Thread.sleep(2000);
+        andi.confirmReservation();
+        viktoria.confirmReservation();
+
+
+        Thread.sleep(5000);
 
         TicketSystem.printHistory();
 

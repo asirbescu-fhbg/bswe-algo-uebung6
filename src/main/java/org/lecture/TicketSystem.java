@@ -79,8 +79,14 @@ public class TicketSystem {
 
             // reservation history
             historyLock.lock();
-            history.add("Benutzer " + Thread.currentThread().getName() + " storniert " + amountTickets
-                    + " Tickets für das Event: " + event.name() + " um " + event.getTime() + ".");
+            if (Thread.currentThread().getName().contains("Timer")) {
+                history.add("Die Reservierung ist abgelaufen. Es werden " + amountTickets +
+                        " Tickets für das Event: " + event.name() + " um " + event.getTime() + " freigegeben.");
+            } else {
+                history.add("Benutzer " + Thread.currentThread().getName() + " storniert " + amountTickets
+                        + " Tickets für das Event: " + event.name() + " um " + event.getTime() + ".");
+            }
+
         }
         catch(Exception ex){
             System.err.println(ex.getMessage());
@@ -100,7 +106,6 @@ public class TicketSystem {
                 return;
             }
             ratings.get(event).add(rating);
-
             historyLock.lock();
             history.add("Benutzer " + Thread.currentThread().getName() + " bewertet das Event: "
                     + event.name() + " um " + event.getTime() + " mit " + rating + " Sternen.");
