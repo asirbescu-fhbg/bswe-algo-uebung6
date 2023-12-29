@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class TicketSystemService {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public TicketSystemService(){
 
@@ -28,39 +28,32 @@ public class TicketSystemService {
     public void startApplication() throws InterruptedException {
         System.out.println("Hi");
 
-        TicketSystem ticketSystem = new TicketSystem();
-        Thread andi = new Thread(() -> ticketSystem.reserveTicket(Event.Concert, 7));
-        andi.setName("Andi");
-        Thread viktoria = new Thread(() -> ticketSystem.reserveTicket(Event.Concert, 9));
-        viktoria.setName("Viktoria");
+        TicketSystem.initialize();
 
-        andi.start();
-        viktoria.start();
-        andi.join();
-        viktoria.join();
+        User amalia = new User("Amalia");
+        amalia.reserve(Event.Sport, 10);
+        amalia.cancel(3);
 
-        andi = new Thread(() -> ticketSystem.cancelTicket(Event.Concert, 2));
-        andi.setName("Andi");
-        viktoria = new Thread(() -> ticketSystem.cancelTicket(Event.Concert, 4));
-        viktoria.setName("Viktoria");
+        User andi = new User("Andi");
+        andi.reserve(Event.Concert, 2);
+        andi.rate(5);
 
-        andi.start();
-        viktoria.start();
-        andi.join();
-        viktoria.join();
+        User viktoria = new User("Viktoria");
+        viktoria.reserve(Event.Theatre, 15);
+        viktoria.cancel(7);
+        viktoria.rate(3);
 
-        andi = new Thread(() -> ticketSystem.rate(Event.Concert, 2));
-        andi.setName("Andi");
-        viktoria = new Thread(() -> ticketSystem.rate(Event.Concert, 5));
-        viktoria.setName("Viktoria");
+        User anon = new User("Anon");
+        anon.reserve(Event.Theatre, 10);
+        anon.cancel(4);
+        anon.rate(2);
 
-        andi.start();
-        viktoria.start();
-        andi.join();
-        viktoria.join();
+        Thread.sleep(3000);
 
-        ticketSystem.printHistory();
+        TicketSystem.printHistory();
 
-        ticketSystem.printAverageRating(Event.Concert);
+        TicketSystem.printAverageRating(Event.Concert);
+        TicketSystem.printAverageRating(Event.Sport);
+        TicketSystem.printAverageRating(Event.Theatre);
     }
 }

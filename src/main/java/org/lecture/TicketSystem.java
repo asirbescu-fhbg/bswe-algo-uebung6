@@ -9,13 +9,17 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class TicketSystem {
-    public Map<Event, Integer> ticketSystem;
-    public Map<Event, List<Integer>> ratings;
-    private final List<String> history;
+    private static Map<Event, Integer> ticketSystem;
+    private static Map<Event, List<Integer>> ratings;
+    private static List<String> history;
 
-    private final ReentrantLock[] mutex = new ReentrantLock[3];
+    private TicketSystem(){
+    }
 
-    public TicketSystem(){
+    private static ReentrantLock[] mutex = new ReentrantLock[3];
+    private static ReentrantLock historyLock;
+
+    public static void initialize(){
         ticketSystem = new HashMap<>();
         // key = Event, value = current amount of available tickets
         ticketSystem.put(Event.Concert, Event.Concert.getMaxTickets());
@@ -31,9 +35,11 @@ public class TicketSystem {
         ratings.put(Event.Concert, new ArrayList<>());
         ratings.put(Event.Sport, new ArrayList<>());
         ratings.put(Event.Theatre, new ArrayList<>());
+
+        historyLock = new ReentrantLock();
     }
 
-    public void reserveTicket(Event event, int amountTickets) {
+    public static void reserveTicket(Event event, int amountTickets) {
         try {
             mutex[event.ordinal()].lock();
             int freeTickets = ticketSystem.get(event);
@@ -46,6 +52,7 @@ public class TicketSystem {
             ticketSystem.replace(event, ticketSystem.get(event) - amountTickets);
 
             // reservation history
+            historyLock.lock();
             history.add("Benutzer " + Thread.currentThread().getName() + " reserviert " + amountTickets
                     + " Tickets für das Event: " + event.name() + " um " + event.getTime() + ".");
         }
@@ -54,10 +61,11 @@ public class TicketSystem {
         }
         finally {
             mutex[event.ordinal()].unlock();
+            historyLock.unlock();
         }
     }
 
-    public void cancelTicket(Event event, int amountTickets) {
+    public static void cancelTicket(Event event, int amountTickets) {
         try {
             mutex[event.ordinal()].lock();
             int freeTickets = ticketSystem.get(event);
@@ -70,6 +78,7 @@ public class TicketSystem {
             ticketSystem.replace(event, ticketSystem.get(event) + amountTickets);
 
             // reservation history
+            historyLock.lock();
             history.add("Benutzer " + Thread.currentThread().getName() + " storniert " + amountTickets
                     + " Tickets für das Event: " + event.name() + " um " + event.getTime() + ".");
         }
@@ -78,10 +87,11 @@ public class TicketSystem {
         }
         finally {
             mutex[event.ordinal()].unlock();
+            historyLock.unlock();
         }
     }
 
-    public void rate(Event event, int rating) {
+    public static void rate(Event event, int rating) {
         try {
             mutex[event.ordinal()].lock();
             if ((rating < 1) || (rating > 5))
@@ -90,6 +100,8 @@ public class TicketSystem {
                 return;
             }
             ratings.get(event).add(rating);
+
+            historyLock.lock();
             history.add("Benutzer " + Thread.currentThread().getName() + " bewertet das Event: "
                     + event.name() + " um " + event.getTime() + " mit " + rating + " Sternen.");
         }
@@ -98,15 +110,16 @@ public class TicketSystem {
         }
         finally {
             mutex[event.ordinal()].unlock();
+            historyLock.unlock();
         }
     }
 
-    public void printHistory(){
+    public static void printHistory(){
         for (String s : history)
             System.out.println(s);
     }
 
-    public void printAverageRating(Event event) {
+    public static void printAverageRating(Event event) {
         int res = 0;
         List<Integer> list = ratings.get(event);
         for (int i = 0; i < list.size(); i++) {
@@ -114,6 +127,6 @@ public class TicketSystem {
         }
 
         System.out.println("Event: " + event.name()
-                + " hat eine durchschnittliche Bewertung von " + ((double)res / list.size()));
+                + " hat eine durchschnittliche Bewertung von " + ((double)res / list.size()) + " Sternen.");
     }
 }
