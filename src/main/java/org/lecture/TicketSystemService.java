@@ -19,10 +19,10 @@ import java.util.Scanner;
 
 public class TicketSystemService {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private String filepath;
 
-    public TicketSystemService() {
-
+    public TicketSystemService(String filepath) {
+        this.filepath = filepath;
     }
 
     /**
@@ -42,30 +42,7 @@ public class TicketSystemService {
         System.out.println(welcomeText);
 
         TicketSystem.initialize();
-        InputHandler.readFile();
-
-        /*
-        User amalia = new User("Amalia");
-        amalia.reserve(Event.Sport, 10);
-        amalia.cancel(3);
-
-        User andi = new User("Andi");
-        andi.reserve(Event.Concert, 2);
-        andi.rate(5);
-
-        User viktoria = new User("Viktoria");
-        viktoria.reserve(Event.Theatre, 15);
-        viktoria.cancel(7);
-        viktoria.rate(3);
-
-        User anon = new User("Anon");
-        anon.reserve(Event.Theatre, 10);
-        anon.rate(2);
-
-        Thread.sleep(2000);
-        andi.confirmReservation();
-        viktoria.confirmReservation();
-         */
+        InputHandler.readFile(filepath);
 
         Thread.sleep(7000);
 

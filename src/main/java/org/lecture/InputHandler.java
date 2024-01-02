@@ -33,13 +33,13 @@ public class InputHandler {
      *
      * @return The content of the File as String Array.
      */
-    public static void readFile() {
-        Path path = Paths.get("src/main/resources", "reservations.txt");
+    public static void readFile(String filepath) {
+        Path path = Paths.get(filepath);
         List<String> lines = new ArrayList<>();
         try {
             lines = Files.readAllLines(path);
         } catch (IOException e) {
-            System.err.println("Should not happen - dummy.txt not found !");
+            System.err.println("File not found: + " + filepath);
         }
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());

@@ -1,0 +1,17 @@
+Lisa;2;Concert;reserve
+Lisa;2;Concert;confirmReservation
+Lisa;5;Concert;rate
+Max;40;Theatre;reserve
+Max;2;Theatre;cancel
+Max;2;Theatre;rate
+Max;3;Concert;rate
+David;3;Concert;reserve
+David;3;Concert;reserve
+David;4;Concert;rate
+Sarah;4;Sport;reserve
+Sarah;4;Sport;confirmReservation
+Sarah;7;Sport;rate
+Sarah;4;Sport;rate
+Sarah;3;Sport;rate
+Emma;10;Theatre;reserve
+Emma;3;Theatre;rate
