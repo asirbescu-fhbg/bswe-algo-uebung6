@@ -1,24 +1,27 @@
 /**
- * SortService is a Java class that provides a console-based application for sorting arrays using Radix Sort
- * and Bubble Sort algorithms. It allows the user to choose sorting options, input data manually or from a file,
- * and view the sorted results along with the execution time.
+ * TicketSystemService is a class representing the main ticket reservation system application.
+ * It provides a console interface for the ticket reservation system.
+ * The system processes reservations from the reservations.txt file and allows users to
+ * perform actions such as reserving tickets, canceling reservations, and providing ratings.
  *
  * @authors: Graf Andreas, Sirbescu Amalia, Vass Viktoria
- * @date: 06.12.2023
- * @project: uebung3 - ALGO
+ * @date: 02.01.2024
+ * @project: uebung6 - ALGO
  */
 
 package org.lecture;
 
 import org.lecture.enums.Event;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TicketSystemService {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public TicketSystemService(){
+    public TicketSystemService() {
 
     }
 
@@ -26,10 +29,22 @@ public class TicketSystemService {
      * Entry point of the application with a console interface.
      */
     public void startApplication() throws InterruptedException {
-        System.out.println("Hi");
+        String welcomeText = """
+                           * * * Ticketreservierungssystem * * *
+                                     
+                Sie befinden sich in einer Ticketreservierungs-Applikation, die die
+                bereitgestellten Reservierungen aus der Datei reservations.txt
+                (gespeichert unter: src/main/resources/reservations.txt) verarbeitet.
+                                
+                Wenn Sie Reservierungen hinzufügen, entfernen oder ändern möchten, passen
+                Sie bitte dieses .txt File an und starten Sie diese Applikation erneut.
+                """;
+        System.out.println(welcomeText);
 
         TicketSystem.initialize();
+        InputHandler.readFile();
 
+        /*
         User amalia = new User("Amalia");
         amalia.reserve(Event.Sport, 10);
         amalia.cancel(3);
@@ -50,12 +65,14 @@ public class TicketSystemService {
         Thread.sleep(2000);
         andi.confirmReservation();
         viktoria.confirmReservation();
+         */
 
+        Thread.sleep(7000);
 
-        Thread.sleep(5000);
-
+        System.out.println("* Reservation history *\n");
         TicketSystem.printHistory();
 
+        System.out.println("* Ratings *\n");
         TicketSystem.printAverageRating(Event.Concert);
         TicketSystem.printAverageRating(Event.Sport);
         TicketSystem.printAverageRating(Event.Theatre);

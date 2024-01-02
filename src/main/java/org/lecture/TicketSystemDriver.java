@@ -1,18 +1,14 @@
 /**
- * SortService is a Java class that provides a console-based application for sorting arrays using Radix Sort
- * and Bubble Sort algorithms. It allows the user to choose sorting options, input data manually or from a file,
- * and view the sorted results along with the execution time.
+ * TicketSystemDriver is the entry point of the application with a console interface.
+ * It initializes and starts the TicketSystemService to run the ticket reservation system.
+ * This class serves as the main driver for the ticket reservation application.
  *
  * @authors: Graf Andreas, Sirbescu Amalia, Vass Viktoria
- * @date: 06.12.2023
- * @project: uebung3 - ALGO
+ * @date: 02.01.2024
+ * @project: uebung6 - ALGO
  */
 
 package org.lecture;
-
-import org.lecture.enums.Event;
-
-import java.util.Scanner;
 
 public class TicketSystemDriver {
 
