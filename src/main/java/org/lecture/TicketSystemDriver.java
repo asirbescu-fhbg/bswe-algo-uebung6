@@ -18,9 +18,9 @@ public class TicketSystemDriver {
      * @param args The arguments given when executing the application.
      */
     public static void main(String[] args) throws InterruptedException {
-        TicketSystemService ticketSystem = new TicketSystemService("src/main/resources/reservations.txt");
+        TicketSystemService ticketSystemService = new TicketSystemService("src/main/resources/reservations.txt");
 
-        ticketSystem.startApplication();
+        ticketSystemService.startApplication();
 
         System.out.println("\nGood Bye - Closing Application");
     }

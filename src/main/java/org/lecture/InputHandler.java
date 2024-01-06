@@ -44,11 +44,38 @@ public class InputHandler {
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
+        int lineNr = 1;
         for (var line : lines) {
-            executorService.submit(() -> processLine(line));
+            if (isValidLine(line)) {
+                executorService.submit(() -> processLine(line));
+            } else {
+                System.err.println("Line " + lineNr + " is invalid: '" + line + "' It will be ignored !\n");
+            }
+            lineNr++;
         }
 
         executorService.shutdown();
+    }
+
+    private static boolean isValidLine(String line) {
+        if (line.trim().isEmpty()) {
+            return false;
+        }
+
+        String[] parts = line.split(";");
+        for (String part : parts) {
+            if (part.trim().isEmpty()) {
+                return false;
+            }
+        }
+
+        try {
+            Integer.parseInt(parts[1].trim());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return parts.length == 4;
     }
 
     private static void processLine(String line) {
@@ -64,7 +91,7 @@ public class InputHandler {
             return;
         }
 
-        if (userName == null) {
+        if (userName.length() <= 1) {
             System.err.println("Benutzername ist nicht gültig: " + Arrays.toString(split));
             return;
         }

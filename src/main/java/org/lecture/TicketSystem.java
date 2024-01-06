@@ -212,12 +212,8 @@ public class TicketSystem {
                 res += rating;
             }
 
-            DecimalFormat df = new DecimalFormat("#,##");
-            double averageRating = (double) res / list.size();
-            double roundedRating = Double.parseDouble(df.format(averageRating));
-
             System.out.println("Event: " + event.name()
-                    + " hat eine durchschnittliche Bewertung von " + roundedRating + " Sternen.\n");
+                    + " hat eine durchschnittliche Bewertung von " + ((double) res / list.size()) + " Sternen.\n");
         } else {
             System.out.println("Event: " + event.name()
                     + " hat keine Bewertung.\n");
